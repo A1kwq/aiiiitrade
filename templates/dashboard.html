@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto AI Trader — Дашборд</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<!-- ═══════════ TOP BAR ═══════════ -->
+<header class="topbar">
+  <div class="topbar-left">
+    <a href="/" class="logo">
+      <span class="logo-icon">🤖</span>
+      <span class="logo-text">Crypto&nbsp;AI&nbsp;Trader</span>
+    </a>
+    <button class="btn-new-trade" onclick="openNewTrade()">
+      <span class="plus-icon">+</span> Новая сделка
+    </button>
+  </div>
+  <div class="topbar-right">
+    <div class="mode-toggle">
+      <button class="mode-btn active" id="btn-real" onclick="setMode('real')">Реальные</button>
+      <button class="mode-btn" id="btn-backtest" onclick="setMode('backtest')">Бэктест</button>
+    </div>
+    <div class="profile">
+      <div class="avatar">А</div>
+      <div class="profile-info">
+        <span class="profile-name">Alex</span>
+        <span class="profile-plan">Pro&nbsp;Plan</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════ MAIN LAYOUT ═══════════ -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <nav class="side-nav">
+      <a href="#" class="nav-item active" data-page="overview">Обзор</a>
+      <a href="#" class="nav-item" data-page="journal">Журнал</a>
+      <a href="#" class="nav-item" data-page="analytics">Аналитика</a>
+      <a href="#" class="nav-item" data-page="analysis">Анализ</a>
+      <a href="#" class="nav-item" data-page="my-ts">Моя&nbsp;ТС</a>
+    </nav>
+
+    <div class="side-section">
+      <h4 class="side-label">Счета</h4>
+      <div class="account-card">
+        <span class="dot dot-green"></span>
+        <span class="account-name">Личный&nbsp;счёт</span>
+        <span class="account-balance">$12&nbsp;450</span>
+      </div>
+      <div class="account-card">
+        <span class="dot dot-blue"></span>
+        <span class="account-name">Prop&nbsp;счёт</span>
+        <span class="account-balance">$8&nbsp;200</span>
+      </div>
+    </div>
+
+    <div class="side-section">
+      <h4 class="side-label">Инструменты</h4>
+      <a href="#" class="tool-item">📐 Калькулятор&nbsp;риска</a>
+      <a href="#" class="tool-item">📰 Новости</a>
+      <a href="#" class="tool-item">📊 COT&nbsp;Report</a>
+    </div>
+
+    <div class="side-section collapsible" id="connections">
+      <h4 class="side-label has-toggle" onclick="toggleConnections()">
+        Подключения <span class="chevron" id="conn-chevron">▸</span>
+      </h4>
+      <div class="conn-list" id="conn-list">
+        <div class="conn-card">
+          <span class="conn-icon">📝</span>
+          <div>
+            <span class="conn-name">Notion</span>
+            <span class="conn-status">Не подключено</span>
+          </div>
+        </div>
+        <div class="conn-card">
+          <span class="conn-icon">✈️</span>
+          <div>
+            <span class="conn-name">Telegram</span>
+            <span class="conn-status">Не подключено</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-footer">
+      <a href="#" class="support-link">💬 Поддержка</a>
+      <div class="socials">
+        <a href="#">TG</a>
+        <a href="#">YT</a>
+        <a href="#">X</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+    <h1 class="page-title">Обзор</h1>
+
+    <!-- Stats row -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-label">П&amp;Р за&nbsp;месяц</span>
+        <span class="stat-value green">+$1&nbsp;240</span>
+        <span class="stat-sub">ROI&nbsp;+3.8%</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Винрейт</span>
+        <span class="stat-value green">64%</span>
+        <span class="stat-sub">15W&nbsp;/&nbsp;8L</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Сделки&nbsp;сегодня</span>
+        <span class="stat-value">3</span>
+        <span class="stat-sub">2&nbsp;open&nbsp;/&nbsp;1&nbsp;closed</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Макс.&nbsp;DD</span>
+        <span class="stat-value red">−$340</span>
+        <span class="stat-sub">за&nbsp;30&nbsp;дн.</span>
+      </div>
+    </div>
+
+    <!-- Open positions -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2>Открытые позиции</h2>
+        <button class="btn-refresh" onclick="refreshData()">⟳ Обновить</button>
+      </div>
+      <table class="positions-table">
+        <thead>
+          <tr>
+            <th>Символ</th><th>Напр.</th><th>Вход</th><th>SL</th><th>TP</th><th>P&amp;L</th><th>Статус</th>
+          </tr>
+        </thead>
+        <tbody id="positions-body">
+          <tr><td>BTC/USDT</td><td class="buy">LONG</td><td>$97&nbsp;420</td><td>$95&nbsp;100</td><td>$101&nbsp;000</td><td class="green">+$312</td><td><span class="badge badge-green">Open</span></td></tr>
+          <tr><td>ETH/USDT</td><td class="sell">SHORT</td><td>$2&nbsp;840</td><td>$3&nbsp;120</td><td>$2&nbsp;500</td><td class="red">−$87</td><td><span class="badge badge-red">Open</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- AI Signals -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2>Сигналы&nbsp;AI</h2>
+        <button class="btn-refresh" onclick="loadSignals()">⟳ Загрузить</button>
+      </div>
+      <div id="signals-area" class="signals-list">
+        <p class="muted">Загрузка…</p>
+      </div>
+    </section>
+
+    <!-- Backtest -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2>Бэктест</h2>
+        <button class="btn-primary" onclick="runBacktest()">Запустить&nbsp;бэктест</button>
+      </div>
+      <div id="backtest-area">
+        <p class="muted">Выберите параметры и&nbsp;запустите бэктест.</p>
+      </div>
+      <canvas id="equity-chart" width="800" height="250"></canvas>
+    </section>
+
+  </main>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

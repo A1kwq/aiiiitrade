@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto AI Trader</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Crypto AI Trader</h1>
+        <p class="subtitle">AI-трейдер с бэктестингом и обучением на графиках</p>
+
+        <!-- Status -->
+        <div class="card">
+            <h2>Статус системы</h2>
+            <div id="status-area">
+                <span id="ai-status">Загрузка...</span>
+            </div>
+        </div>
+
+        <!-- Portfolio / Dashboard -->
+        <div class="card">
+            <h2>Портфель и дашборд</h2>
+            <div id="portfolio-area">
+                <p>Данные загружаются...</p>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="card">
+            <h2>Графики (OHLC)</h2>
+            <div class="chart-controls">
+                <select id="coin-select" onchange="updateChart()">
+                    <option value="BTC">Bitcoin</option>
+                    <option value="ETH">Ethereum</option>
+                    <option value="SOL">Solana</option>
+                    <option value="BNB">BNB</option>
+                    <option value="XRP">Ripple</option>
+                    <option value="DOGE">Dogecoin</option>
+                </select>
+                <select id="period-select" onchange="updateChart()">
+                    <option value="1h">1 час</option>
+                    <option value="4h">4 часа</option>
+                    <option value="1d">1 день</option>
+                    <option value="1w">1 неделя</option>
+                </select>
+            </div>
+            <canvas id="price-chart" width="800" height="300"></canvas>
+        </div>
+
+        <!-- Backtest -->
+        <div class="card">
+            <h2>Бэктест</h2>
+            <div id="backtest-area">
+                <p>Выберите стратегию для запуска бэктеста...</p>
+            </div>
+            <canvas id="equity-chart" width="800" height="250"></canvas>
+        </div>
+
+        <!-- AI Bot / Strategy -->
+        <div class="card">
+            <h2>AI-бот: генерация стратегий</h2>
+            <div id="bot-area">
+                <p>Загрузка...</p>
+            </div>
+        </div>
+
+        <!-- AI Trader / Training -->
+        <div class="card">
+            <h2>AI-трейдер: обучение</h2>
+            <div id="trainer-area">
+                <p>Загрузка...</p>
+            </div>
+            <canvas id="training-chart" width="800" height="250"></canvas>
+        </div>
+
+        <!-- Settings -->
+        <div class="card">
+            <h2>Настройки</h2>
+            <div id="settings-area">
+                <p>Загрузка...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
